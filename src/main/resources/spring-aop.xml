@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="com.wener"/>
+    <aop:aspectj-autoproxy/>
+    <!--
+    注意
+    1> 导入  xmlns:aop="http://www.springframework.org/schema/aop" 空间
+    2> Spring AOP 配置都必须定义在 <aop:config>元素内部
+    3> 在 <aop:config> 中，注册切面<aop:aspect> 注册切入点
+    4> 声明切入点<aop:pointcut>
+    5> 在<aop:aspect>中,配置5种通知类型
+     <aop:after>
+     <aop:around>
+     <aop:after-returning>
+     <aop:after-throwing>
+     <aop:before>
+    -->
+    <!-- 注册被代理的目标对象 -->
+    <bean id="pojoDao" class="com.wener.example.aop.pojo.PojoDaoImpl"/>
+    <!--注册通知类-->
+    <bean id="aspect" class="com.wener.example.aop.pojo.PojoAspect"/>
+    <!-- AOP配置 -->
+    <!--声明切面-->
+    <aop:config>
+        <!--声明切入点-->
+        <aop:pointcut id="pointcut" expression="execution(* com.wener.example.aop.pojo.*.*(..))"/>
+        <aop:aspect ref="aspect">
+            <aop:after method="after" pointcut-ref="pointcut"/>
+            <aop:around method="surround" pointcut-ref="pointcut"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="pointcut"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut"/>
+            <aop:before method="before" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

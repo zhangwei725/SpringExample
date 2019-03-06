@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="target" class="com.wener.example.aop.base.UserDaoImpl"/>
+    <!--注册一组通知-->
+    <bean id="afterAdvice" class="com.wener.example.aop.base.TestAfterAdvice"/>
+    <bean id="beforeAdvice" class="com.wener.example.aop.base.TestBeforeAdvice"/>
+    <bean id="surroundAdvice" class="com.wener.example.aop.base.TestSurroundAdvice"/>
+    <bean id="throwingAdvice" class="com.wener.example.aop.base.TestThrowingAdvice"/>
+
+    <!--注册代理对象 -->
+    <bean id="proxy"
+          class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames-ref="advices"
+          p:target-ref="target"
+          p:proxyTargetClass="true"
+          p:proxyInterfaces="com.wener.example.aop.base.UserDao">
+    </bean>
+
+
+    <util:list id="advices">
+        <value>afterAdvice</value>
+        <value>surroundAdvice</value>
+        <value>surroundAdvice</value>
+        <value>throwingAdvice</value>
+    </util:list>
+</beans>

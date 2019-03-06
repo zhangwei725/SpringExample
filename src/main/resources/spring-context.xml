@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 扫描的基本包路径 -->
+    <context:component-scan base-package="com.wener.example"/>
+
+    <!--<context:component-scan base-package="com.xxx."-->
+    <!--annotation-config="true"-->
+    <!--name-generator="org.springframework.context.annotation.AnnotationBeanNameGenerator"-->
+    <!--resource-pattern="**/*.class"-->
+    <!--scope-resolver="org.springframework.context.annotation.AnnotationScopeMetadataResolver"-->
+    <!--scoped-proxy="no"-->
+    <!--use-default-filters="false">-->
+
+    <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>-->
+    <!--<context:include-filter type="assignable" expression="com.wjx.betalot.performer.Performer"/>-->
+    <!--<context:include-filter type="assignable" expression="com.wjx.betalot.performer.impl.Sonnet"/>-->
+    <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    <!--<context:exclude-filter type="assignable" expression="com.wjx.betalot.performer.impl.RainPoem"/>-->
+    <!--<context:exclude-filter type="regex" expression=".service.*"/>-->
+    <!--</context:component-scan>-->
+
+</beans>

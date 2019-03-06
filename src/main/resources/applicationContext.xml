@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.wener.example.annotations.User" scope="prototype"/>
+
+    <bean id="userDao"
+          lazy-init="false"
+          class="com.wener.example.dao.impl.UserDaoImpl"
+    />
+    <alias name="userDao" alias="dao"/>
+
+    <bean id="parent"
+          class="com.wener.example.bean.Parent">
+        <property name="name" value="小明"/>
+    </bean>
+    <bean id="child"
+          parent="parent"
+          class="com.wener.example.bean.Child">
+        <property name="age" value="10"/>
+    </bean>
+
+    <!---->
+    <bean id="shop" class="com.wener.example.bean.Shop">
+        <!--通过构造方法注入-->
+        <constructor-arg type="int" value="1"/>
+        <constructor-arg type="java.lang.String" value="iPhone X"/>
+    </bean>
+
+    <bean id="shop1" class="com.wener.example.bean.Shop">
+        <property name="name" value="华为 Meta 20"/>
+        <property name="title" value="华为手机"/>
+    </bean>
+
+    <bean id="detail" class="com.wener.example.bean.ShopDetail">
+        <property name="desc" value="世界第一"/>
+    </bean>
+
+    <bean id="shop2" class="com.wener.example.bean.Shop">
+        <property name="detail" ref="detail"/>
+    </bean>
+
+    <bean id="application" class="com.wener.example.bean.Application" autowire="byName">
+    </bean>
+
+
+    <bean id="userId" class="com.wener.example.annotations.User" scope="prototype">
+        <property name="name" value="小明"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <bean id="xx" class="com.wener.example.bean.Application">
+        <property name="user">
+
+            <bean class="com.wener.example.annotations.User">
+                <property name="name" value="内部Bean"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <bean id="xxx" class="com.wener.example.bean.Application">
+        <property name="user.name" value="级联属性设置"/>
+    </bean>
+    <bean id="complex" class="com.wener.example.bean.Complex">
+        <property name="list">
+            <list>
+                <value>list1</value>
+                <value>list2</value>
+                <value>list3</value>
+                <value>list4</value>
+                <ref bean="user"/>
+            </list>
+        </property>
+
+        <property name="map">
+            <map>
+                <entry key="k1" value="v1"/>
+                <entry key="k2" value="v2"/>
+                <entry key="k3" value="v3"/>
+                <entry key="k4" value-ref="user"/>
+            </map>
+        </property>
+
+        <property name="set">
+            <set>
+                <value>1</value>
+                <value>测试</value>
+            </set>
+        </property>
+
+
+        <property name="properties">
+
+            <props>
+                <prop key="k1">v1</prop>
+            </props>
+        </property>
+        <property name="array">
+            <array>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </array>
+        </property>
+        <property name="users">
+            <array>
+                <ref bean="user"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="shop5" class="com.wener.example.bean.Shop" c:shopId="1" c:name="测试"/>
+    <bean id="user4" class="com.wener.example.annotations.User" p:name="admin" p:password="123"/>
+    <bean id="app"
+          class="com.wener.example.bean.Application"
+          p:user-ref="user"
+    />
+
+    <bean id="complex1" class="com.wener.example.bean.Complex" p:list="list"/>
+
+
+    <util:list id="list" value-type="java.lang.String" list-class="java.util.LinkedList">
+        <value>1</value>
+        <value>2</value>
+        <value>3</value>
+    </util:list>
+    <util:map id="map"
+              map-class="java.util.HashMap"
+              value-type="java.lang.Object"
+              key-type="java.lang.Object">
+
+        <entry value-ref="list" key-ref="set"/>
+    </util:map>
+    <util:set id="set">
+        <value>1</value>
+        <value>2</value>
+        <value>3</value>
+    </util:set>
+
+    <util:properties id="properties">
+        <prop key="a">a</prop>
+        <prop key="b">b</prop>
+    </util:properties>
+    <util:properties id="properties1" location="utils.properties"/>
+    <util:constant id="error" static-field="com.wener.example.bean.Application.ERROR"/>
+    <util:property-path id="username" path="user_path.name"/>
+    <bean id="user_path" class="com.wener.example.annotations.User" scope="prototype">
+        <property name="name" value="小明"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+</beans>
